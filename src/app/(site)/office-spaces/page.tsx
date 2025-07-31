@@ -12,7 +12,7 @@ const page = () => {
             <HeroSub
                 title="Office Spaces."
                 description="Experience elegance and comfort with our exclusive luxury  villas, designed for sophisticated living."
-                badge="Properties"
+                // badge="Properties"
             />
             <OfficeSpace />
         </>

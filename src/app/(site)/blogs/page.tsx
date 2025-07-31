@@ -13,7 +13,7 @@ const Blog = () => {
             <HeroSub
                 title="Real estate insights."
                 description="Stay ahead in the property market with expert advice and updates."
-                badge="Blog"
+                // badge="Blog"
             />
             <BlogList />
         </>
