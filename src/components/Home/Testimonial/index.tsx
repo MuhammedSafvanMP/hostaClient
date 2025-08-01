@@ -80,7 +80,7 @@ const Testimonial = () => {
                                                 />
                                                 <div>
                                                     <h6 className="text-white text-xm font-medium">{item.name}</h6>
-                                                    <p className="text-white/40">{item.position}</p>
+                                                    <p className="text-white/40">{item?.time}</p>
                                                 </div>
                                             </div>
                                         </div>

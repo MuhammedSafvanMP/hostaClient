@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 
-export default function BookingForm({ isOpen, onClose, onSubmit, defaultData} )  {
+export default function BookingForm({ isOpen, onClose, onSubmit, defaultData }) {
   const [formData, setFormData] = useState({
     userId: "",
     roomId: defaultData?.roomId || "",
@@ -55,7 +55,6 @@ export default function BookingForm({ isOpen, onClose, onSubmit, defaultData} ) 
           <input
             type="date"
             name="checkInDate"
-            placeholder="Check-In Date"
             value={formData.checkInDate}
             onChange={handleChange}
             className="border p-2 rounded w-full"
@@ -63,7 +62,6 @@ export default function BookingForm({ isOpen, onClose, onSubmit, defaultData} ) 
           <input
             type="date"
             name="checkOutDate"
-            placeholder="Check-Out Date"
             value={formData.checkOutDate}
             onChange={handleChange}
             className="border p-2 rounded w-full"

@@ -6,26 +6,21 @@ import { Icon } from "@iconify/react";
 import { testimonials } from "@/app/api/testimonial";
 import Link from "next/link";
 import Image from "next/image";
-import BookingForm from "../bookingForm/page";
+import BookingForm from "@/components/bookingForm";
 
 export default function Details() {
   const { slug } = useParams();
 
   const item = propertyHomes.find((item) => item.slug === slug);
 
-  const [showPopup, setShowPopup] = useState(false);
 
-  const handleBookingSubmit = async (data: any) => {
-    // try {
-    //   const response = await ("/api/booking", data);
-    //   alert("Booking created successfully!");
-    //   setShowPopup(false);
-    // } catch (error) {
-    //   console.error(error);
-    //   alert("Failed to create booking");
-    // }
-    return data;
+ const [isOpen, setIsOpen] = useState(true);
+
+  const handleSubmit = (data: any) => {
+    console.log("Booking Data:", data);
+    setIsOpen(false);
   };
+
 
   const [newReview, setNewReview] = useState("");
 const [newRating, setNewRating] = useState(0);
@@ -360,7 +355,7 @@ const [newRating, setNewRating] = useState(0);
                 Discounted Price
               </p>
               <button
-                onClick={() => setShowPopup(true)}
+        onClick={() => setIsOpen(true)}
                 className="py-4 px-8 bg-primary text-white rounded-full w-full block text-center hover:bg-dark duration-300 text-base mt-8 hover:cursor-pointer"
               >
                 Get in touch
@@ -445,15 +440,13 @@ const [newRating, setNewRating] = useState(0);
         </div>
       </div>
 
-      <BookingForm
-        isOpen={showPopup}
-        onClose={() => setShowPopup(false)}
-        onSubmit={handleBookingSubmit}
-        defaultData={{
-          roomId: "212345678",
-          hostelId: "123499kjkk",
-        }}
+        <BookingForm
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        onSubmit={handleSubmit}
+        defaultData={{ roomId: "123", hostelId: "456" }}
       />
+      
     </section>
   );
 }
