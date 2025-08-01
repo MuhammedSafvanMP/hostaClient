@@ -1,6 +1,6 @@
 export type Testimonial = {
     review: string
     name: string
-    position: string
+    time: string
     image: string
 }
