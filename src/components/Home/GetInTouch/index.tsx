@@ -22,7 +22,7 @@ const GetInTouch: React.FC = () => {
                                 timeless luxury come together.
                             </h2>
                             <Link href="#" className='bg-white py-4 px-8 rounded-full text-dark hover:bg-dark hover:text-white duration-300'>
-                                Get In Touch
+                Contact Owner Directly
                             </Link>
                         </div>
                     </div>

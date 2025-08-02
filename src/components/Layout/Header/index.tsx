@@ -172,7 +172,7 @@ const Header: React.FC = () => {
               Contact
             </p>
             <Link href="#" className='text-base sm:text-xm font-medium text-inherit hover:text-primary'>
-              hello@homely.com
+              hello@hostay.com
             </Link>
             <Link href="#" className='text-base sm:text-xm font-medium text-inherit hover:text-primary'>
               +1-212-456-7890{' '}

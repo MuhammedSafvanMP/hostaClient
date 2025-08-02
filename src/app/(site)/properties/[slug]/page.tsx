@@ -358,7 +358,7 @@ const [newRating, setNewRating] = useState(0);
         onClick={() => setIsOpen(true)}
                 className="py-4 px-8 bg-primary text-white rounded-full w-full block text-center hover:bg-dark duration-300 text-base mt-8 hover:cursor-pointer"
               >
-                Get in touch
+                Contact Owner Directly
               </button>
               <div className="absolute right-0 top-4 -z-[1]">
                 <Image

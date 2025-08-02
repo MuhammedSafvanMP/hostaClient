@@ -17,51 +17,24 @@ const popularPlaces = [
   "Kannur",
   "Kottayam",
   "Alappuzha",
-    "Kochi",
-  "Calicut",
-  "Thiruvananthapuram",
-  "Thrissur",
-  "Malappuram",
-  "Kannur",
-  "Kottayam",
-  "Alappuzha",  "Kochi",
-  "Calicut",
-  "Thiruvananthapuram",
-  "Thrissur",
-  "Malappuram",
-  "Kannur",
-  "Kottayam",
-  "Alappuzha",  "Kochi",
-  "Calicut",
-  "Thiruvananthapuram",
-  "Thrissur",
-  "Malappuram",
-  "Kannur",
-  "Kottayam",
-  "Alappuzha",
 ];
 
 export default function HeroSub({ title, description }: HeroSubProps) {
   return (
     <section className="relative pt-40 pb-20 text-center bg-cover overflow-x-hidden">
-      {/* ✅ Search */}
-      <div className="w-full flex justify-center px-4 mb-10">
-        <form className="w-full max-w-3xl">
-          <div className="flex flex-col md:flex-row bg-white/90 dark:bg-dark/60 backdrop-blur-md border border-white/20 dark:border-dark/30 rounded-full overflow-hidden shadow-lg">
+      {/* ✅ Search Bar Only */}
+      <div className="w-full flex justify-center mb-6">
+        <form className="w-full max-w-3xl mx-auto px-4">
+          <div className="flex items-center bg-white/90 dark:bg-dark/60 backdrop-blur-md border border-white/20 dark:border-dark/30 rounded-full overflow-hidden shadow-lg">
             <input
               type="text"
-              placeholder="Enter city or state"
-              className="flex-1 py-4 px-6 bg-transparent text-dark dark:text-white placeholder:text-dark/50 dark:placeholder:text-white/50 focus:outline-none"
+              placeholder="City or state"
+              className="flex-1 py-2 px-4 bg-transparent text-dark dark:text-white placeholder:text-dark/50 dark:placeholder:text-white/50 focus:outline-none text-xs md:text-sm"
             />
-            <select className="flex-1 md:max-w-xs py-4 px-6 bg-transparent text-dark dark:text-white focus:outline-none border-t md:border-t-0 md:border-l border-dark/10 dark:border-white/10">
-              <option value="">Select Category</option>
-              <option value="men">Men</option>
-              <option value="women">Women</option>
-              <option value="unisex">Unisex</option>
-            </select>
+
             <button
               type="submit"
-              className="bg-primary hover:bg-dark text-white font-semibold px-8 py-4 transition-colors duration-300 whitespace-nowrap"
+              className="bg-primary hover:bg-dark text-white font-semibold px-5 py-2 transition-colors duration-300 text-xs md:text-sm"
             >
               Search
             </button>
@@ -69,8 +42,44 @@ export default function HeroSub({ title, description }: HeroSubProps) {
         </form>
       </div>
 
+      {/* ✅ Filter Bar - Separated */}
+      <div className="w-full flex justify-center mb-10">
+        <div className="w-full max-w-4xl mx-auto px-4 flex flex-wrap gap-4 justify-center">
+
+          <select className="py-2 px-4 bg-white/90 dark:bg-dark/60 border border-white/20 dark:border-dark/30 rounded-full text-dark dark:text-white focus:outline-none text-xs md:text-sm">
+              <option value="">Category</option>
+              <option value="men">Men</option>
+              <option value="women">Women</option>
+              <option value="others">Others</option>
+            </select>
+
+          {/* Rent Filter */}
+          <select className="py-2 px-4 bg-white/90 dark:bg-dark/60 border border-white/20 dark:border-dark/30 rounded-full text-dark dark:text-white focus:outline-none text-xs md:text-sm">
+            <option value="">Rent</option>
+            <option value="low">Low to High</option>
+            <option value="high">High to Low</option>
+          </select>       
+
+          {/* Meals Filter */}
+          <select className="py-2 px-4 bg-white/90 dark:bg-dark/60 border border-white/20 dark:border-dark/30 rounded-full text-dark dark:text-white focus:outline-none text-xs md:text-sm">
+            <option value="">Meals</option>
+            <option value="veg">Vegetarian</option>
+            <option value="nonveg">Non-Vegetarian</option>
+            <option value="both">Both</option>
+          </select>
+
+          {/* Distance Filter */}
+          <select className="py-2 px-4 bg-white/90 dark:bg-dark/60 border border-white/20 dark:border-dark/30 rounded-full text-dark dark:text-white focus:outline-none text-xs md:text-sm">
+            <option value="">Distance to City</option>
+            <option value="near">0-5 km</option>
+            <option value="medium">5-10 km</option>
+            <option value="far">10+ km</option>
+          </select>
+        </div>
+      </div>
+
       {/* ✅ Popular Places */}
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto mb-8">
         <div className="flex overflow-x-auto scrollbar-hide gap-6 pl-4 pr-4 snap-x snap-mandatory">
           {popularPlaces.map((place) => (
             <div
@@ -86,9 +95,8 @@ export default function HeroSub({ title, description }: HeroSubProps) {
         </div>
       </div>
 
-   
-
-      <h2 className="text-dark dark:text-white text-4xl md:text-5xl font-bold mt-4">
+      {/* ✅ Title & Description */}
+      <h2 className="text-dark dark:text-white text-4xl md:text-5xl font-bold">
         {title}
       </h2>
 

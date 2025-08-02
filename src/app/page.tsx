@@ -6,13 +6,12 @@ import Testimonial from '@/components/Home/Testimonial'
 import BlogSmall from '@/components/shared/Blog'
 import GetInTouch from '@/components/Home/GetInTouch'
 import FAQ from '@/components/Home/FAQs'
-// import FindHostel from '@/components/filter.tsx/page'
+import Promotion from '@/components/Home/Promotion'
 
 export default function Home() {
   return (
     <main>
       <Hero />
-      {/* <FindHostel /> */}
       <Services />
       <Properties />
       <FeaturedProperty />
@@ -20,6 +19,7 @@ export default function Home() {
       <BlogSmall />
       <GetInTouch />
       <FAQ />
+      <Promotion />
     </main>
   )
 }

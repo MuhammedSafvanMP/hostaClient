@@ -33,10 +33,7 @@ const BlogSmall: React.FC = () => {
             <div className="container max-w-8xl mx-auto px-5 2xl:px-0">
                 <div className='flex justify-between md:items-end items-start mb-10 md:flex-row flex-col'>
                     <div>
-                        <p className="text-dark/75 dark:text-white/75 text-base font-semibold flex gap-2">
-                            <Icon icon="ph:house-simple-fill" className="text-2xl text-primary" aria-label="Home icon" />
-                            Blog
-                        </p>
+                     
                         <h2 className="lg:text-52 text-40 font-medium dark:text-white">
                             Real estate insights
                         </h2>

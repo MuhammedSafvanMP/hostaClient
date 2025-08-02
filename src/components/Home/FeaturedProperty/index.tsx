@@ -72,10 +72,6 @@ const FeaturedProperty: React.FC = () => {
           </div>
           <div className="flex flex-col gap-10">
             <div>
-              <p className="text-dark/75 dark:text-white/75 text-base font-semibold flex gap-2">
-                <Icon icon="ph:house-simple-fill" className="text-2xl text-primary " />
-                Featured property
-              </p>
               <h2 className="lg:text-52 text-40 font-medium text-dark dark:text-white">
                 Modern luxe villa
               </h2>
@@ -178,10 +174,13 @@ const FeaturedProperty: React.FC = () => {
               </div>
             </div>
             <div className="flex gap-10">
-              <Link href="/contactus" className="py-4 px-8 bg-primary hover:bg-dark duration-300 rounded-full text-white">
-                Get in touch
-              </Link>
-              <div>
+ <Link
+  href="/contactus"
+  className="inline-flex items-center justify-center py-2.5 px-5 md:py-4 md:px-8 bg-primary hover:bg-dark duration-300 rounded-full text-white text-sm md:text-base"
+>
+                Contact Owner Directly
+</Link>
+  <div>
                 <h4 className="text-3xl text-dark dark:text-white font-medium">
                   $1,650,500
                 </h4>
