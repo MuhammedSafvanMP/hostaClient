@@ -90,7 +90,7 @@ import { Icon } from '@iconify/react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const PropertyCard: React.FC<{ item: PropertyHomes }> = ({ item }) => {
+const PropertyCard: React.FC<{ item: PropertyHomes,  textColor: string }> = ({ item,  textColor }) => {
   const { name, location, rate, beds, baths, area, slug, images } = item;
 
   const mainImage = images[0]?.src;
@@ -120,11 +120,11 @@ const PropertyCard: React.FC<{ item: PropertyHomes }> = ({ item }) => {
           <div className="flex flex-col gap-3 justify-between mb-4">
             <div>
               <Link href={`/properties/${slug}`}>
-                <h3 className="text-base font-semibold text-black dark:text-white group-hover:text-primary">
+                <h3 className= {`text-base font-semibold ${textColor}  dark:text-white group-hover:text-primary`}>
                   {name}
                 </h3>
               </Link>
-              <p className="text-xs font-normal text-black/50 dark:text-white/50">{location}</p>
+              <p className={`text-xs font-normal ${textColor}  dark:text-white/50`}>{location}</p>
             </div>
             <div>
               <button className="text-xs font-medium text-primary px-3 py-1 rounded-full bg-primary/10">
@@ -135,20 +135,20 @@ const PropertyCard: React.FC<{ item: PropertyHomes }> = ({ item }) => {
 
           <div className="flex justify-between">
             <div className="flex flex-col gap-1 border-r border-black/10 dark:border-white/20 pr-2">
-              <Icon icon="solar:bed-linear" width={16} height={16} />
-              <p className="text-xs font-normal text-black dark:text-white">
+              <Icon icon="solar:bed-linear"  className={`${textColor}`} width={16} height={16} />
+              <p className={`text-xs font-normal ${textColor} dark:text-white`}>
                 {beds} Beds
               </p>
             </div>
             <div className="flex flex-col gap-1 border-r border-black/10 dark:border-white/20 px-2">
-              <Icon icon="solar:bath-linear" width={16} height={16} />
-              <p className="text-xs font-normal text-black dark:text-white">
+              <Icon icon="solar:bath-linear"  className={`${textColor}`} width={16} height={16} />
+              <p className={`text-xs font-normal ${textColor} dark:text-white`}>
                 {baths} Baths
               </p>
             </div>
             <div className="flex flex-col gap-1 pl-2">
-              <Icon icon="lineicons:arrow-all-direction" width={16} height={16} />
-              <p className="text-xs font-normal text-black dark:text-white">
+              <Icon icon="lineicons:arrow-all-direction" className={`${textColor}`} width={16} height={16} />
+              <p className={`text-xs font-normal ${textColor} dark:text-white`}>
                 {area}m<sup>2</sup>
               </p>
             </div>

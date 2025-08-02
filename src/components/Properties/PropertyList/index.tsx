@@ -11,7 +11,7 @@ const PropertiesListing: React.FC = () => {
 
           {propertyHomes.map((item, index) => (
             <div key={index} className=''>
-              <PropertyCard item={item} />
+              <PropertyCard item={item}  textColor = {"text-black"} />
             </div>
           ))}
         </div>
