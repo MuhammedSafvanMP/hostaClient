@@ -4,11 +4,14 @@ import { useParams } from "next/navigation";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 import BookingForm from "@/components/bookingForm";
-import { fetchAHostelReviews, fetchAHostelRoom, postAHostelReviews } from "@/api/Api";
+import {
+  fetchAHostelReviews,
+  fetchAHostelRoom,
+  postAHostelReviews,
+} from "@/api/Api";
 import * as Icons from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { formatDistanceToNowStrict, parseISO } from "date-fns";
-
 
 export default function Details() {
   const { slug } = useParams();
@@ -18,7 +21,6 @@ export default function Details() {
   const [reviews, setReviews] = useState<any>([]);
   const [newReview, setNewReview] = useState("");
   const [newRating, setNewRating] = useState(0);
-
 
   useEffect(() => {
     const loadData = async () => {
@@ -30,9 +32,9 @@ export default function Details() {
       }
     };
 
-       const loadReviewData = async () => {
+    const loadReviewData = async () => {
       try {
-        const res = await fetchAHostelReviews(slug);        
+        const res = await fetchAHostelReviews(slug);
         setReviews(res);
       } catch (err) {
         console.error("Failed to fetch reviews:", err);
@@ -47,36 +49,28 @@ export default function Details() {
 
   const item = data[0];
 
-  const handleSubmit = (data: any) => {
-    console.log("Booking Data:", data);
-    setIsOpen(false);
-  };
 
+  // Component handler
+  const handleAddReview = async () => {
+    if (newReview.trim() === "") return;
 
+    const newItem = {
+      roomId: slug,
+      userId: "682aff06f8f939751cf0050c",
+      chat: newReview,
+    };
 
+    try {
+      const response = await postAHostelReviews(newItem);
 
-// Component handler
-const handleAddReview = async () => {
-  if (newReview.trim() === "") return;
-
-  const newItem = {
-    roomId: slug,
-    userId: "682aff06f8f939751cf0050c", 
-    chat: newReview,
-  };
-
-  try {
-    const response = await postAHostelReviews(newItem);
-
-    if (response.status === 201) {
-      setNewReview("");
-      await fetchAHostelReviews(slug);
+      if (response.status === 201) {
+        setNewReview("");
+        await fetchAHostelReviews(slug);
+      }
+    } catch (error) {
+      console.error("Error posting review:", error);
     }
-  } catch (error) {
-    console.error("Error posting review:", error);
-  }
-};
-
+  };
 
   return (
     <section className="!pt-44 pb-20 relative">
@@ -129,7 +123,6 @@ const handleAddReview = async () => {
                   width={20}
                   height={20}
                 />
-            
               </div>
             </div>
           </div>
@@ -211,17 +204,22 @@ const handleAddReview = async () => {
               </p>
             </div>
 
-      
-
-            <Tabs defaultValue="nearest"  className="py-8 w-full mt-8 border-t border-dark/5 dark:border-white/15">
+            <Tabs
+              defaultValue="nearest"
+              className="py-8 w-full mt-8 border-t border-dark/5 dark:border-white/15"
+            >
               {/* Tab Headers */}
               <TabsList className="grid grid-cols-3 w-full">
-                <TabsTrigger className="cursor-pointer" value="transportation">Transportation</TabsTrigger>
-                <TabsTrigger className="cursor-pointer" value="nearby">Near By</TabsTrigger>
-                <TabsTrigger className="cursor-pointer" value="restaurants">Restaurants</TabsTrigger>
-
+                <TabsTrigger className="cursor-pointer" value="transportation">
+                  Transportation
+                </TabsTrigger>
+                <TabsTrigger className="cursor-pointer" value="nearby">
+                  Near By
+                </TabsTrigger>
+                <TabsTrigger className="cursor-pointer" value="restaurants">
+                  Restaurants
+                </TabsTrigger>
               </TabsList>
-
 
               {/* Tab Content */}
               <TabsContent value="transportation" className="p-4">
@@ -234,12 +232,7 @@ const handleAddReview = async () => {
                         key={amenity._id}
                         className="flex items-center gap-2.5"
                       >
-                        {LucideIcon && (
-                          <LucideIcon
-                            width={16}
-                            height={16}
-                          />
-                        )}
+                        {LucideIcon && <LucideIcon width={16} height={16} />}
                         <p className="text-sm mobile:text-base font-normal text-black dark:text-white">
                           {amenity.name}
                         </p>
@@ -250,7 +243,7 @@ const handleAddReview = async () => {
               </TabsContent>
 
               <TabsContent value="nearby" className="p-4">
-                    <div className="grid grid-cols-3 mt-5 gap-6">
+                <div className="grid grid-cols-3 mt-5 gap-6">
                   {item?.hostelId?.nearbyPlaces?.map((amenity: any) => {
                     const LucideIcon: any =
                       Icons[amenity.icon as keyof typeof Icons];
@@ -259,12 +252,7 @@ const handleAddReview = async () => {
                         key={amenity._id}
                         className="flex items-center gap-2.5"
                       >
-                        {LucideIcon && (
-                          <LucideIcon
-                            width={16}
-                            height={16}
-                          />
-                        )}
+                        {LucideIcon && <LucideIcon width={16} height={16} />}
                         <p className="text-sm mobile:text-base font-normal text-black dark:text-white">
                           {amenity.name}
                         </p>
@@ -274,8 +262,8 @@ const handleAddReview = async () => {
                 </div>
               </TabsContent>
 
-                      <TabsContent value="restaurants" className="p-4">
-                    <div className="grid grid-cols-3 mt-5 gap-6">
+              <TabsContent value="restaurants" className="p-4">
+                <div className="grid grid-cols-3 mt-5 gap-6">
                   {item?.hostelId?.restaurants?.map((amenity: any) => {
                     const LucideIcon: any =
                       Icons[amenity.icon as keyof typeof Icons];
@@ -284,12 +272,7 @@ const handleAddReview = async () => {
                         key={amenity._id}
                         className="flex items-center gap-2.5"
                       >
-                        {LucideIcon && (
-                          <LucideIcon
-                            width={16}
-                            height={16}
-                          />
-                        )}
+                        {LucideIcon && <LucideIcon width={16} height={16} />}
                         <p className="text-sm mobile:text-base font-normal text-black dark:text-white">
                           {amenity.name}
                         </p>
@@ -298,7 +281,6 @@ const handleAddReview = async () => {
                   })}
                 </div>
               </TabsContent>
-
             </Tabs>
 
             <iframe
@@ -390,9 +372,9 @@ const handleAddReview = async () => {
                     {item?.userId?.name}
                   </h3>
                   <span className="text-[10px] text-dark/50 dark:text-white/50 mb-2">
-                     {formatDistanceToNowStrict(parseISO(item?.createdAt), {
-                            addSuffix: true,
-                          })}
+                    {formatDistanceToNowStrict(parseISO(item?.createdAt), {
+                      addSuffix: true,
+                    })}
                   </span>
                   <p className="text-xs text-dark dark:text-white leading-relaxed">
                     {item?.chat}
@@ -407,8 +389,7 @@ const handleAddReview = async () => {
       <BookingForm
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        onSubmit={handleSubmit}
-        defaultData={{ roomId: "123", hostelId: "456" }}
+         roomId = {slug} hostelId = {item?.hostelId?._id} 
       />
     </section>
   );

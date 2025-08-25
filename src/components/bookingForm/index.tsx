@@ -1,22 +1,38 @@
 "use client";
 
+import { postAHostelBooking } from "@/api/Api";
 import React, { useState } from "react";
 
-export default function BookingForm({ isOpen, onClose, onSubmit, defaultData }) {
+export default function BookingForm({ isOpen, onClose, roomId, hostelId }) {
   const [formData, setFormData] = useState({
-    userId: "",
-    roomId: defaultData?.roomId || "",
-    hostelId: defaultData?.hostelId || "",
     checkInDate: "",
-    checkOutDate: "",
   });
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  const handleBooking = () => {
-    onSubmit(formData);
+  const handleBooking = async () => {
+    try {
+      const booking = {
+        userId: "682aff06f8f939751cf0050c", 
+        roomId,
+        hostelId,
+        checkInDate: formData.checkInDate,
+      };
+
+      const response = await postAHostelBooking(booking);
+
+      if (response.status === 201) {
+        onClose();
+      }
+    } catch (error) {
+      console.error("Error posting booking:", error);
+    }
   };
 
   if (!isOpen) return null;
@@ -29,40 +45,9 @@ export default function BookingForm({ isOpen, onClose, onSubmit, defaultData }) 
         </h2>
         <div className="flex flex-col gap-4">
           <input
-            type="text"
-            name="userId"
-            placeholder="Your User ID"
-            value={formData.userId}
-            onChange={handleChange}
-            className="border p-2 rounded w-full"
-          />
-          <input
-            type="text"
-            name="roomId"
-            placeholder="Room ID"
-            value={formData.roomId}
-            onChange={handleChange}
-            className="border p-2 rounded w-full"
-          />
-          <input
-            type="text"
-            name="hostelId"
-            placeholder="Hostel ID"
-            value={formData.hostelId}
-            onChange={handleChange}
-            className="border p-2 rounded w-full"
-          />
-          <input
             type="date"
             name="checkInDate"
             value={formData.checkInDate}
-            onChange={handleChange}
-            className="border p-2 rounded w-full"
-          />
-          <input
-            type="date"
-            name="checkOutDate"
-            value={formData.checkOutDate}
             onChange={handleChange}
             className="border p-2 rounded w-full"
           />
