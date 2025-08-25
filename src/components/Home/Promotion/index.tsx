@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react';
 const Promotion: React.FC = () => {
   return (
     <section>
-      <div className="container max-w-8xl mx-auto px-5 2xl:px-0 py-20">
+      <div className="container max-w-8xl mx-auto px-5 2xl:px-0 py-20 ">
         <div className="flex flex-col md:flex-row items-center justify-between gap-10 bg-primary/5 p-10 rounded-2xl">
           {/* Text Section */}
           <div className="flex-1 text-center md:text-left">

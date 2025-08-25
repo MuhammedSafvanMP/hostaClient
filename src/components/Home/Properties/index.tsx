@@ -1,9 +1,31 @@
-import { Icon } from '@iconify/react'
+"use client"
+import { fetchHostelActive } from '@/api/Api'
 import PropertyCard from './Card/Card'
-import { propertyHomes } from '@/app/api/propertyhomes'
 import Link from 'next/link'
 
-const Properties: React.FC = () => {
+import { useEffect, useState } from 'react'
+
+const Properties: React.FC =  () => {
+
+    
+
+const [data, setData] = useState<any>(null);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const res = await fetchHostelActive();
+        setData(res);
+      } catch (err) {
+        console.error("Failed to fetch hostels:", err);
+      }
+    };
+
+    loadData();
+  }, []); 
+
+  if (!data) return <p>Loading...</p>;
+
   return (
     <section className='bg-dark'>
       <div className='container max-w-8xl mx-auto px-5 2xl:px-0'>
@@ -21,8 +43,8 @@ const Properties: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-5">
-          {propertyHomes.slice(0, 6).map((item, index) => (
-            <div key={index}>
+          {data?.slice(0, 6).map((item: any) => (
+            <div key={item?._id}>
               <PropertyCard item={item} textColor={"text-white"} />
             </div>
           ))}

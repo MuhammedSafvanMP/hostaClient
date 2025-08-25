@@ -14,13 +14,22 @@ const Hero: React.FC = () => {
             <h1 className="text-inherit text-6xl sm:text-9xl font-semibold -tracking-wider md:max-w-45p mt-4 mb-10">
               safe, comfy, and hassle? free stays!
             </h1>
-            <form className="w-full max-w-full mx-auto px-3">
+            {/* <form className="w-full max-w-full mx-auto px-3">
               <div className="flex flex-row flex-nowrap items-center bg-white/90 dark:bg-dark/60 backdrop-blur-md border border-white/20 dark:border-dark/30 rounded-full overflow-hidden shadow-lg">
                 <input
                   type="text"
                   placeholder="City or state"
                   className="flex-[2] min-w-[100px] py-2 px-3 bg-transparent text-dark dark:text-white placeholder:text-dark/50 dark:placeholder:text-white/50 focus:outline-none text-xs"
+                /> */}
+
+    <form className="w-full flex justify-center md:justify-start">
+              <div className="flex flex-row flex-nowrap items-center bg-white/90 dark:bg-dark/60 backdrop-blur-md border border-white/20 dark:border-dark/30 rounded-full overflow-hidden shadow-lg w-full max-w-md">
+                <input
+                  type="text"
+                  placeholder="City or state"
+                  className="flex-[2] min-w-[100px] py-2 px-3 bg-transparent text-dark dark:text-white placeholder:text-dark/50 dark:placeholder:text-white/50 focus:outline-none text-xs sm:text-sm"
                 />
+                
                 <select className="flex-[1] min-w-[80px] py-2 px-2 bg-transparent text-dark dark:text-white focus:outline-none border-l border-dark/10 dark:border-white/10 text-xs">
                   <option value="">Category</option>
                   <option value="men">Men</option>
