@@ -1,26 +1,24 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { propertyHomes } from "@/app/api/propertyhomes";
 import { useParams } from "next/navigation";
 import { Icon } from "@iconify/react";
-import { testimonials } from "@/app/api/testimonial";
-import Link from "next/link";
 import Image from "next/image";
 import BookingForm from "@/components/bookingForm";
-import { fetchAHostelRoom } from "@/api/Api";
+import { fetchAHostelReviews, fetchAHostelRoom, postAHostelReviews } from "@/api/Api";
 import * as Icons from "lucide-react";
-
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { formatDistanceToNowStrict, parseISO } from "date-fns";
+
 
 export default function Details() {
   const { slug } = useParams();
 
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState<any>(null);
+  const [reviews, setReviews] = useState<any>([]);
   const [newReview, setNewReview] = useState("");
   const [newRating, setNewRating] = useState(0);
 
-  const [testimonialsList, setTestimonialsList] = useState(testimonials);
 
   useEffect(() => {
     const loadData = async () => {
@@ -32,33 +30,53 @@ export default function Details() {
       }
     };
 
+       const loadReviewData = async () => {
+      try {
+        const res = await fetchAHostelReviews(slug);        
+        setReviews(res);
+      } catch (err) {
+        console.error("Failed to fetch reviews:", err);
+      }
+    };
+
     loadData();
+    loadReviewData();
   }, []);
 
   if (!data) return <p>Loading...</p>;
 
   const item = data[0];
-  console.log(item, "hii");
 
   const handleSubmit = (data: any) => {
     console.log("Booking Data:", data);
     setIsOpen(false);
   };
 
-  const handleAddReview = () => {
-    if (newReview.trim() === "") return;
 
-    // This simulates adding a new review locally
-    const newItem = {
-      name: "You",
-      image: "/images/default-user.png", // placeholder image or avatar
-      review: newReview,
-      time: "Just now",
-    };
 
-    setTestimonialsList([newItem, ...testimonialsList]); // add to top
-    setNewReview(""); // clear textarea
+
+// Component handler
+const handleAddReview = async () => {
+  if (newReview.trim() === "") return;
+
+  const newItem = {
+    roomId: slug,
+    userId: "682aff06f8f939751cf0050c", 
+    chat: newReview,
   };
+
+  try {
+    const response = await postAHostelReviews(newItem);
+
+    if (response.status === 201) {
+      setNewReview("");
+      await fetchAHostelReviews(slug);
+    }
+  } catch (error) {
+    console.error("Error posting review:", error);
+  }
+};
+
 
   return (
     <section className="!pt-44 pb-20 relative">
@@ -355,27 +373,29 @@ export default function Details() {
                 </button>
               </div>
 
-              {testimonials.map((item, index) => (
+              {reviews?.map((item: any) => (
                 <div
-                  key={index}
+                  key={item?._id}
                   className="border p-4 rounded-xl cursor-pointer border-dark/10 dark:border-white/20 flex flex-col items-center text-center bg-white dark:bg-dark/20 shadow-sm"
                 >
                   <Image
-                    src={item.image}
-                    alt={item.name}
+                    src={item?.userId?.image}
+                    alt={item?.userId?.name}
                     width={400}
                     height={400}
                     className="w-12 h-12 rounded-full object-cover mb-2"
                     unoptimized={true}
                   />
                   <h3 className="text-sm font-medium text-dark dark:text-white">
-                    {item.name}
+                    {item?.userId?.name}
                   </h3>
                   <span className="text-[10px] text-dark/50 dark:text-white/50 mb-2">
-                    {item.time || "2 days ago"}
+                     {formatDistanceToNowStrict(parseISO(item?.createdAt), {
+                            addSuffix: true,
+                          })}
                   </span>
                   <p className="text-xs text-dark dark:text-white leading-relaxed">
-                    {item.review}
+                    {item?.chat}
                   </p>
                 </div>
               ))}

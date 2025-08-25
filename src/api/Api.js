@@ -18,3 +18,15 @@ export const fetchAHostelRoom  = async (id) => {
   const response = await axios.get(`${API}/rooms/hostels/${id}`);
   return response.data; 
 };
+
+
+export const fetchAHostelReviews  = async (id) => {
+  const response = await axios.get(`${API}/reviews/rooms/${id}`);
+  return response.data; 
+};
+
+
+export const postAHostelReviews  = async (data) => {
+  const response = await axios.post(`${API}/reviews`, {data});
+  return response; 
+};
