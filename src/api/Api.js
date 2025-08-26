@@ -48,3 +48,8 @@ export const userSignup  = async (data) => {
   const response = await axios.post(`${API}/users`, {data});
   return response; 
 };
+
+export const userSignin  = async (data) => {
+  const response = await axios.post(`${API}/users/login`, {data});
+  return response; 
+};
