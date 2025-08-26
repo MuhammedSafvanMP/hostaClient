@@ -41,3 +41,10 @@ export const postAHostelBooking  = async (data) => {
   const response = await axios.post(`${API}/bookings`, {data});
   return response; 
 };
+
+
+
+export const userSignup  = async (data) => {
+  const response = await axios.post(`${API}/users`, {data});
+  return response; 
+};

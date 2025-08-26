@@ -95,6 +95,7 @@ const PropertyCard: React.FC<{ item: any; textColor: string }> = ({
                 {"more"}
               </p>
             </div>
+            
           </div>
         </div>
       </div>
