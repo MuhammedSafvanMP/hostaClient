@@ -1,21 +1,30 @@
-
 import { Icon } from "@iconify/react";
 import Image from "next/image";
-import Link from "next/link";
 
 import * as Icons from "lucide-react";
 
-const PropertyCard: React.FC<{ item: any; textColor: string }> = ({
+const PropertyCard: React.FC<{ item: any; textColor: string, router: any }> = ({
   item,
   textColor,
+  router
 }) => {
   const { amenities, name, photos, description, price, slug, _id } = item;
+    
+
+  const handleNavigate = () => {
+const user = JSON.parse(localStorage.getItem("user") || "null");
+    if (user && user?._id) {
+      router.push(`/properties/${_id}`);
+    } else {
+      router.push("/signin");
+    }
+  };
 
   return (
     <div>
       <div className="relative rounded-xl border border-dark/10 dark:border-white/10 group hover:shadow-3xl duration-300 dark:hover:shadow-white/20">
         <div className="overflow-hidden rounded-t-xl">
-             <Link href={`/properties/${_id}`}>
+             <span  onClick={handleNavigate} className="cursor-pointer group" >
 
             <Image
               src={photos[0]}
@@ -25,7 +34,7 @@ const PropertyCard: React.FC<{ item: any; textColor: string }> = ({
               className="w-full rounded-t-xl group-hover:brightness-50 group-hover:scale-110 transition duration-300"
               unoptimized
             />
-          </Link>
+          </span>
           <div className="absolute top-3 right-3 p-2 bg-white rounded-full hidden group-hover:block">
             <Icon
               icon="solar:arrow-right-linear"
@@ -39,13 +48,12 @@ const PropertyCard: React.FC<{ item: any; textColor: string }> = ({
         <div className="p-4">
           <div className="flex flex-col gap-3 justify-between mb-4">
             <div>
-              <Link href={`/properties/${slug}`}>
                 <h3
-                  className={`text-base font-semibold ${textColor}  dark:text-white group-hover:text-primary`}
+                onClick={handleNavigate} 
+                  className={`text-base font-semibold cursor-pointer ${textColor}   dark:text-white group-hover:text-primary`}
                 >
                   {name}
                 </h3>
-              </Link>
               <p
                 className={`text-xs font-normal ${textColor}  dark:text-white/50`}
               >

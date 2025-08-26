@@ -53,3 +53,8 @@ export const userSignin  = async (data) => {
   const response = await axios.post(`${API}/users/login`, {data});
   return response; 
 };
+
+export const userOtp  = async (data) => {
+  const response = await axios.post(`${API}/users/otp`, {data});
+  return response; 
+};

@@ -33,7 +33,7 @@ const SignUp = ({ signUpOpen }: { signUpOpen?: any }) => {
 
       if (response.status === 201) {
         resetForm();
-        router.push("/");
+        router.push("/signin");
       }
     } catch (error) {
       console.error("Error signing up:", error);

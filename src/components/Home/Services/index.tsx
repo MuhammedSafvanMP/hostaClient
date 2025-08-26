@@ -1,8 +1,23 @@
 import Image from "next/image";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Link from "next/link";
+// import { useRouter } from "next/navigation";
 
 const Categories = () => {
+
+      // const router = useRouter();
+  
+
+//     const handleNavigate = () => {
+// const user = JSON.parse(localStorage.getItem("user") || "null");
+//     if (user && user?._id) {
+//       router.push(`/properties/${_id}`);
+//     } else {
+//       router.push("/signin");
+//     }
+//   };
+
+
   return (
     <section className="relative overflow-hidden">
       {/* Background Vector */}

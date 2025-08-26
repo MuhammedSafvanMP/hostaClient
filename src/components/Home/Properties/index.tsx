@@ -3,13 +3,17 @@ import { fetchHostelActive } from '@/api/Api'
 import PropertyCard from './Card/Card'
 import Link from 'next/link'
 
+
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 const Properties: React.FC =  () => {
 
     
 
 const [data, setData] = useState<any>(null);
+
+    const router = useRouter();
 
   useEffect(() => {
     const loadData = async () => {
@@ -45,7 +49,7 @@ const [data, setData] = useState<any>(null);
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-5">
           {data?.slice(0, 6).map((item: any) => (
             <div key={item?._id}>
-              <PropertyCard item={item} textColor={"text-white"} />
+              <PropertyCard item={item} textColor={"text-white"}  router = {router} />
             </div>
           ))}
         </div>
