@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import NavLink from './Navigation/NavLink'
 import { useTheme } from 'next-themes'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { User } from 'lucide-react'
 
@@ -14,6 +14,8 @@ const Header: React.FC = () => {
   const [navbarOpen, setNavbarOpen] = useState(false)
   const { theme, setTheme } = useTheme()
   const pathname = usePathname()
+
+const router = useRouter();
 
   const sideMenuRef = useRef<HTMLDivElement>(null)
 
@@ -38,6 +40,15 @@ const Header: React.FC = () => {
   }, [handleScroll])
 
   const isHomepage = pathname === '/'
+
+    const handleNavigate = () => {
+const user = JSON.parse(localStorage.getItem("user") || "null");
+    if (user && user?._id) {
+      router.push(`/profile`);
+    } else {
+      router.push("/signin");
+    }
+  };
 
   return (
     <header className={`fixed h-24 py-1 z-50 w-full bg-transparent transition-all duration-300 lg:px-0 px-4 ${sticky ? "top-3" : "top-0"}`}>
@@ -160,9 +171,9 @@ const Header: React.FC = () => {
                   <Link href="/signin" className='py-4 px-8 bg-primary text-base leading-4 block w-fit text-white rounded-full border border-primary font-semibold mt-3 hover:bg-transparent hover:text-primary duration-300'>
                     Sign In
                   </Link>
-                  <Link href="/profile" className='py-4 px-8 bg-transparent border border-primary text-base leading-4 block w-fit text-primary rounded-full font-semibold mt-3 hover:bg-primary hover:text-white duration-300'>
+                  <button onClick={handleNavigate} className='py-4 px-8 bg-transparent border border-primary text-base leading-4 block w-fit text-primary rounded-full font-semibold mt-3 hover:bg-primary hover:text-white duration-300'>
                     <User />
-                  </Link>
+                  </button>
                 </li>
               </ul>
             </nav>

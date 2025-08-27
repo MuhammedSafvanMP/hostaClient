@@ -14,7 +14,7 @@ const PropertyCard: React.FC<{ item: any; textColor: string, router: any }> = ({
   const handleNavigate = () => {
 const user = JSON.parse(localStorage.getItem("user") || "null");
     if (user && user?._id) {
-      router.push(`/properties/${_id}`);
+      router.push(`/propertie/${_id}`);
     } else {
       router.push("/signin");
     }

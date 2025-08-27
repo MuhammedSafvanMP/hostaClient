@@ -58,3 +58,18 @@ export const userOtp  = async (data) => {
   const response = await axios.post(`${API}/users/otp`, {data});
   return response; 
 };
+
+export const fetchAUser  = async (id) => {
+  const response = await axios.get(`${API}/users/${id}`);
+  return response.data; 
+};
+
+
+export const updateAUser = async (id, formData) => {
+  const response = await axios.put(`${API}/users/${id}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response;
+};
