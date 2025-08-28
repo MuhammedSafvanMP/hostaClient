@@ -1,3 +1,5 @@
+"use client"
+
 import PropertyCard from '@/components/Home/Properties/Card/Card'
 import { propertyHomes } from '@/app/api/propertyhomes'
 import { useRouter } from 'next/router';
