@@ -2,14 +2,12 @@
 
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { Icon } from "@iconify/react";
+import { useAppContext } from "@/context/AppContext";
 
 
 interface HeroSubProps {
   title: string ;
   description: string;
-  setFilter: Dispatch<SetStateAction<string>>;
-  setSearch: Dispatch<SetStateAction<string>>;
-  search: string;
 }
 
 // ✅ Filters Component
@@ -82,11 +80,10 @@ const popularPlaces = [
 export default function HeroSub({
   title,
   description,
-  setFilter,
-  setSearch,
-  search,
 }: HeroSubProps) {
   const [isFocused, setIsFocused] = useState(false);
+                const { search, setSearch, filter, setFilter } = useAppContext();
+
 
   //   const params = useSearchParams();
   // const searchparm = params.get("search");

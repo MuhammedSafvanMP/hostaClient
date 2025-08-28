@@ -13,9 +13,6 @@ const Page = () => {
       <HeroSub
         title="Book Direct"
         description="Contact trusted owners directly without middlemen"
-        setFilter={setFilter}
-        setSearch={setSearch}
-        search={search}
       />
       <PropertiesListing filter={filter} search={search} />
     </>
