@@ -1,11 +1,5 @@
-import SignUp from "@/components/Auth/SignUp";
 import Profile from "@/components/Profile";
-import { Metadata } from "next";
 
-export const metadata: Metadata = {
-    title:
-        "Sign Up | Hostay",
-};
 
 const ProfilePage = () => {
     return (
