@@ -9,14 +9,25 @@ const Profile = () => {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
+  const [userId, setUserId] = useState<any>(null);
 
-  const userId = JSON.parse(localStorage.getItem("user") || "null");
+  // ✅ Get userId safely in the browser
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        setUserId(JSON.parse(storedUser));
+      }
+    }
+  }, []);
 
-  // ✅ Fetch user profile
+  // ✅ Fetch user profile once we have userId
   useEffect(() => {
     const fetchProfile = async () => {
+      if (!userId?._id) return;
+
       try {
-        const res = await fetchAUser(userId?._id);
+        const res = await fetchAUser(userId._id);
         setUser(res);
       } catch (err) {
         console.error("Error fetching profile:", err);
@@ -24,8 +35,9 @@ const Profile = () => {
         setLoading(false);
       }
     };
+
     fetchProfile();
-  }, []);
+  }, [userId]);
 
   // ✅ Validation schema
   const validationSchema = Yup.object({
