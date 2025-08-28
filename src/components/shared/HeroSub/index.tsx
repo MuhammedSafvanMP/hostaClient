@@ -2,7 +2,6 @@
 
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { Icon } from "@iconify/react";
-import { useSearchParams } from "next/navigation";
 
 
 interface HeroSubProps {
@@ -70,15 +69,15 @@ const popularPlaces = [
   "Alappuzha",
 ];
 
-const recentSearches = [
-  "All of Malappuram",
-  "Indira Gandhi Memorial Bus Terminal",
-  "Saudippadi Bus Station",
-  "New Bus Stand",
-  "Kuttanpadi Bus Stop",
-  "Thadathil Kundu Bus Stop",
-  "Kizhakekulambu Bus Stop",
-];
+// const recentSearches = [
+//   "All of Malappuram",
+//   "Indira Gandhi Memorial Bus Terminal",
+//   "Saudippadi Bus Station",
+//   "New Bus Stand",
+//   "Kuttanpadi Bus Stop",
+//   "Thadathil Kundu Bus Stop",
+//   "Kizhakekulambu Bus Stop",
+// ];
 
 export default function HeroSub({
   title,
