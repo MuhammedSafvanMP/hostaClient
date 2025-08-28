@@ -36,20 +36,15 @@ const Profile = () => {
       .required("Required"),
   });
 
-
   const handleSubmit = async (values: any, { setSubmitting }: any) => {
     try {
       const formData = new FormData();
       formData.append("name", values.name);
       formData.append("email", values.email);
       formData.append("phone", values.phone);
-
-      if (values.image) formData.append("image", values.image); // File
-      if (values.proofFront) formData.append("proof.front", values.proofFront);
-      if (values.proofBack) formData.append("proof.baack", values.proofBack);
+      if (values.image) formData.append("image", values.image);
 
       const res = await updateAUser(userId?._id, formData);
-
       setUser(res.data.user); // updated user
       setEditMode(false);
     } catch (error) {
@@ -62,35 +57,36 @@ const Profile = () => {
   if (loading) return <p className="text-center mt-10">Loading...</p>;
 
   return (
-    <div className="max-w-4xl  mx-auto p-6 bg-white dark:bg-gray-900 shadow-xl rounded-2xl">
+    <div className="max-w-3xl mx-auto p-6 bg-white dark:bg-gray-900 shadow-lg rounded-2xl">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">My Profile</h2>
+      <div className="flex justify-between items-center mb-8 border-b pb-4">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+          My Profile
+        </h2>
         {editMode ? (
           <button
             onClick={() => setEditMode(false)}
-            className="flex items-center gap-2 text-red-500 hover:text-red-700"
+            className="flex items-center gap-2 text-red-500 hover:text-red-600 font-medium"
           >
             <X size={18} /> Cancel
           </button>
         ) : (
           <button
             onClick={() => setEditMode(true)}
-            className="flex items-center gap-2 text-primary hover:text-darkprimary cursor-pointer"
+            className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium"
           >
-            <Edit2 size={18} />
+            <Edit2 size={18} /> Edit
           </button>
         )}
       </div>
 
+      {/* Form */}
       <Formik
         initialValues={{
           image: user?.image || "",
           name: user?.name || "",
           email: user?.email || "",
           phone: user?.phone || "",
-          proofFront: user?.proof?.front || "",
-          proofBack: user?.proof?.back || "",
         }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
@@ -98,61 +94,57 @@ const Profile = () => {
       >
         {({ isSubmitting, setFieldValue, values }) => (
           <Form>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
               {/* Profile Image */}
-              <div className="flex flex-col items-center">
-                <div className="relative">
-                  <img
-                    src={
-                      values.image instanceof File
-                        ? URL.createObjectURL(values.image)
-                        : values.image || "/default-avatar.png"
-                    }
-                    alt="Profile"
-                    width={120}
-                    height={120}
-                    className="rounded-full object-cover border w-28 h-28"
-                  />
-                  {editMode && (
-                    <label className="absolute bottom-0 right-0 bg-primary p-2 rounded-full cursor-pointer">
-                      <Camera className="text-white" size={16} />
-                  
-                      <input
-                        type="file"
-                        hidden
-                        accept="image/*"
-                        onChange={(e) => {
-                          if (e.target.files && e.target.files[0]) {
-                            const file = e.target.files[0];
-                            setFieldValue("image", file); // ✅ keep file
-                          }
-                        }}
-                      />
-                    </label>
-                  )}
-                </div>
+              <div className="relative">
+                <img
+                  src={
+                    values.image instanceof File
+                      ? URL.createObjectURL(values.image)
+                      : values.image || "/default-avatar.png"
+                  }
+                  alt="Profile"
+                  className="rounded-full object-cover border-4 border-gray-200 dark:border-gray-700 w-32 h-32 shadow-md"
+                />
+                {editMode && (
+                  <label className="absolute bottom-0 right-0 bg-blue-600 hover:bg-blue-700 p-2 rounded-full cursor-pointer shadow-md">
+                    <Camera className="text-white" size={18} />
+                    <input
+                      type="file"
+                      hidden
+                      accept="image/*"
+                      onChange={(e) => {
+                        if (e.target.files && e.target.files[0]) {
+                          const file = e.target.files[0];
+                          setFieldValue("image", file);
+                        }
+                      }}
+                    />
+                  </label>
+                )}
               </div>
 
               {/* User Info */}
-              <div className="space-y-4">
+              <div className="flex-1 space-y-5 w-full">
                 {/* Name */}
                 {editMode ? (
                   <div>
                     <Field
                       type="text"
                       name="name"
-                      placeholder="Name"
-                      className="w-full rounded-md border px-4 py-2 dark:bg-gray-800"
+                      placeholder="Full Name"
+                      className="w-full rounded-md border border-gray-300 px-4 py-2 dark:bg-gray-800 dark:text-white"
                     />
                     <ErrorMessage
                       name="name"
                       component="div"
-                      className="text-red-500 text-sm"
+                      className="text-red-500 text-sm mt-1"
                     />
                   </div>
                 ) : (
-                  <p>
-                    <span className="font-semibold">Name:</span> {values.name}
+                  <p className="text-lg">
+                    <span className="font-semibold">Name:</span>{" "}
+                    {values.name || "-"}
                   </p>
                 )}
 
@@ -163,17 +155,18 @@ const Profile = () => {
                       type="email"
                       name="email"
                       placeholder="Email"
-                      className="w-full rounded-md border px-4 py-2 dark:bg-gray-800"
+                      className="w-full rounded-md border border-gray-300 px-4 py-2 dark:bg-gray-800 dark:text-white"
                     />
                     <ErrorMessage
                       name="email"
                       component="div"
-                      className="text-red-500 text-sm"
+                      className="text-red-500 text-sm mt-1"
                     />
                   </div>
                 ) : (
-                  <p>
-                    <span className="font-semibold">Email:</span> {values.email}
+                  <p className="text-lg">
+                    <span className="font-semibold">Email:</span>{" "}
+                    {values.email || "-"}
                   </p>
                 )}
 
@@ -184,100 +177,30 @@ const Profile = () => {
                       type="text"
                       name="phone"
                       placeholder="Phone"
-                      className="w-full rounded-md border px-4 py-2 dark:bg-gray-800"
+                      className="w-full rounded-md border border-gray-300 px-4 py-2 dark:bg-gray-800 dark:text-white"
                     />
                     <ErrorMessage
                       name="phone"
                       component="div"
-                      className="text-red-500 text-sm"
+                      className="text-red-500 text-sm mt-1"
                     />
                   </div>
                 ) : (
-                  <p>
-                    <span className="font-semibold">Phone:</span> {values.phone}
+                  <p className="text-lg">
+                    <span className="font-semibold">Phone:</span>{" "}
+                    {values.phone || "-"}
                   </p>
-                )}
-              </div>
-            </div>
-
-            {/* Proof Docs */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-              {/* Front */}
-              <div className="border rounded-md p-3 text-center">
-                <p className="mb-2 font-semibold">Proof Front</p>
-                {values.proofFront ? (
-                  <img
-                    src={
-                      values.proofFront instanceof File
-                        ? URL.createObjectURL(values.proofFront)
-                        : values.proofFront
-                    }
-                    alt="Proof Front"
-                    width={200}
-                    height={120}
-                    className="mx-auto rounded"
-                  />
-                ) : (
-                  <div className="w-full h-28 flex items-center justify-center border bg-gray-100 dark:bg-gray-700 rounded">
-                    <span>No Image</span>
-                  </div>
-                )}
-                {editMode && (
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="mt-2 text-sm"
-                    onChange={(e) => {
-                      if (e.target.files && e.target.files[0]) {
-                        setFieldValue("proofFront", e.target.files[0]);
-                      }
-                    }}
-                  />
-                )}
-              </div>
-
-              {/* Back */}
-              <div className="border rounded-md p-3 text-center">
-                <p className="mb-2 font-semibold">Proof Back</p>
-                {values.proofBack ? (
-                  <img
-                    src={
-                      values.proofBack instanceof File
-                        ? URL.createObjectURL(values.proofBack)
-                        : values.proofBack
-                    }
-                    alt="Proof Back"
-                    width={200}
-                    height={120}
-                    className="mx-auto rounded"
-                  />
-                ) : (
-                  <div className="w-full h-28 flex items-center justify-center border bg-gray-100 dark:bg-gray-700 rounded">
-                    <span>No Image</span>
-                  </div>
-                )}
-                {editMode && (
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="mt-2 text-sm"
-                    onChange={(e) => {
-                      if (e.target.files && e.target.files[0]) {
-                        setFieldValue("proofBack", e.target.files[0]);
-                      }
-                    }}
-                  />
                 )}
               </div>
             </div>
 
             {/* Save Button */}
             {editMode && (
-              <div className="mt-6 flex justify-end">
+              <div className="flex justify-end">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex items-center gap-2 bg-primary text-white px-6 py-2 rounded-md hover:bg-darkprimary transition disabled:opacity-50"
+                  className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition disabled:opacity-50"
                 >
                   <Save size={18} />
                   {isSubmitting ? "Saving..." : "Save Changes"}

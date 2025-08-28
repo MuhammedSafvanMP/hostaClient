@@ -1,55 +1,58 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { Icon } from "@iconify/react";
+import { useSearchParams } from "next/navigation";
+
 
 interface HeroSubProps {
-  title: string;
+  title: string ;
   description: string;
+  setFilter: Dispatch<SetStateAction<string>>;
+  setSearch: Dispatch<SetStateAction<string>>;
+  search: string;
 }
 
 // ✅ Filters Component
-function Filter() {
+function Filter({ setFilter }: { setFilter: Dispatch<SetStateAction<string>> }) {
   return (
     <div className="w-full flex justify-center mb-6">
       <div className="w-full max-w-4xl mx-auto px-4 flex flex-wrap gap-4 justify-center">
         {/* Category */}
-        <select className="py-2 px-4 bg-white/90 dark:bg-dark/60 
+        <select
+          onChange={(e) => setFilter(e.target.value)}
+          className="py-2 px-4 bg-white/90 dark:bg-dark/60 
         border border-white/20 dark:border-dark/30 rounded-full 
-        text-dark dark:text-white focus:outline-none text-xs md:text-sm">
+        text-dark dark:text-white focus:outline-none text-xs md:text-sm"
+        >
           <option value="">Category</option>
-          <option value="men">Men</option>
-          <option value="women">Women</option>
-          <option value="others">Others</option>
+          <option value="Men's hostel">Mens Hostel</option>
+          <option value="Women's hostel">Womens Hostel</option>
+          <option value="Others">Others</option>
         </select>
 
         {/* Rent */}
-        <select className="py-2 px-4 bg-white/90 dark:bg-dark/60 
+        <select
+          onChange={(e) => setFilter(e.target.value)}
+          className="py-2 px-4 bg-white/90 dark:bg-dark/60 
         border border-white/20 dark:border-dark/30 rounded-full 
-        text-dark dark:text-white focus:outline-none text-xs md:text-sm">
+        text-dark dark:text-white focus:outline-none text-xs md:text-sm"
+        >
           <option value="">Rent</option>
           <option value="low">Low to High</option>
           <option value="high">High to Low</option>
         </select>
 
         {/* Meals */}
-        <select className="py-2 px-4 bg-white/90 dark:bg-dark/60 
+        <select
+          onChange={(e) => setFilter(e.target.value)}
+          className="py-2 px-4 bg-white/90 dark:bg-dark/60 
         border border-white/20 dark:border-dark/30 rounded-full 
-        text-dark dark:text-white focus:outline-none text-xs md:text-sm">
+        text-dark dark:text-white focus:outline-none text-xs md:text-sm"
+        >
           <option value="">Meals</option>
-          <option value="veg">Vegetarian</option>
-          <option value="nonveg">Non-Vegetarian</option>
-          <option value="both">Both</option>
-        </select>
-
-        {/* Distance */}
-        <select className="py-2 px-4 bg-white/90 dark:bg-dark/60 
-        border border-white/20 dark:border-dark/30 rounded-full 
-        text-dark dark:text-white focus:outline-none text-xs md:text-sm">
-          <option value="">Distance to City</option>
-          <option value="near">0-5 km</option>
-          <option value="medium">5-10 km</option>
-          <option value="far">10+ km</option>
+          <option value="with food">With food</option>
+          <option value="without food">Without food</option>
         </select>
       </div>
     </div>
@@ -77,25 +80,40 @@ const recentSearches = [
   "Kizhakekulambu Bus Stop",
 ];
 
-export default function HeroSub({ title, description }: HeroSubProps) {
-  const [searchText, setSearchText] = useState("");
+export default function HeroSub({
+  title,
+  description,
+  setFilter,
+  setSearch,
+  search,
+}: HeroSubProps) {
   const [isFocused, setIsFocused] = useState(false);
+
+  //   const params = useSearchParams();
+  // const searchparm = params.get("search");
+  // const category = params.get("category");
+  //   const place = params.get("place");
+
+  //  setFilter(place || "");
+  //   // setFilter(category || "");
+  //   setSearch(searchparm || "");
 
   return (
     <section className="relative pt-40 pb-20 text-center bg-cover overflow-x-hidden">
       {/* ✅ Search Bar */}
       <div className="w-full flex justify-center mb-6">
         <div className="w-full max-w-3xl mx-auto px-4">
-          <div className="flex items-center bg-white/90 dark:bg-dark/60 
+          <div
+            className="flex items-center bg-white/90 dark:bg-dark/60 
           backdrop-blur-md border border-white/20 dark:border-dark/30 
-          rounded-full overflow-hidden shadow-lg">
-            
+          rounded-full overflow-hidden shadow-lg"
+          >
             {/* 👈 Back Button (only when focused) */}
             {isFocused && (
               <button
                 onClick={() => {
                   setIsFocused(false);
-                  setSearchText("");
+                  setSearch("");
                 }}
                 className="p-2 pl-3 text-dark/70 dark:text-white/70 hover:text-dark dark:hover:text-white"
               >
@@ -106,8 +124,8 @@ export default function HeroSub({ title, description }: HeroSubProps) {
             <input
               type="text"
               placeholder="City or state"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
               className="flex-1 py-2 px-4 bg-transparent text-dark dark:text-white 
               placeholder:text-dark/50 dark:placeholder:text-white/50 
               focus:outline-none text-xs md:text-sm"
@@ -137,10 +155,15 @@ export default function HeroSub({ title, description }: HeroSubProps) {
                   key={place}
                   className="flex flex-col items-center shrink-0 snap-start"
                 >
-                  <div className="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center text-lg font-bold">
+                  <div
+                    onClick={() => setFilter(place)}
+                    className="w-16 cursor-pointer h-16 rounded-full bg-primary text-white flex items-center justify-center text-lg font-bold"
+                  >
                     {place[0]}
                   </div>
-                  <p className="text-sm text-dark dark:text-white mt-2">{place}</p>
+                  <p className="text-sm text-dark dark:text-white mt-2">
+                    {place}
+                  </p>
                 </div>
               ))}
             </div>
@@ -161,12 +184,20 @@ export default function HeroSub({ title, description }: HeroSubProps) {
       {isFocused && (
         <>
           {/* Filters on top */}
-          <Filter />
+          <Filter setFilter={setFilter} />
+
+           <h2 className="text-dark dark:text-white text-4xl md:text-5xl font-bold">
+            {title}
+          </h2>
+
+          <p className="text-lg text-dark/50 dark:text-white/50 font-normal w-full max-w-2xl mx-auto mt-2">
+            {description}
+          </p>
 
           {/* Recent Searches */}
-          <div className="max-w-4xl mx-auto mb-10  text-left px-4">
+          {/* <div className="max-w-4xl mx-auto mb-10  text-left px-4">
             <h3 className="text-sm font-semibold text-dark/70 dark:text-white/70 mb-3">
-              Frequently searched in {searchText || "your city"}
+              Frequently searched in {search || "your city"}
             </h3>
             <ul className="space-y-3">
               {recentSearches.map((item, index) => (
@@ -179,7 +210,7 @@ export default function HeroSub({ title, description }: HeroSubProps) {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
         </>
       )}
     </section>

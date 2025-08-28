@@ -8,13 +8,13 @@ const PropertyCard: React.FC<{ item: any; textColor: string, router: any }> = ({
   textColor,
   router
 }) => {
-  const { amenities, name, photos, description, price, slug, _id } = item;
+  const { amenities, name, photos, description, price, _id } = item;
     
 
   const handleNavigate = () => {
 const user = JSON.parse(localStorage.getItem("user") || "null");
     if (user && user?._id) {
-      router.push(`/propertie/${_id}`);
+      router.push(`/properties/${_id}`);
     } else {
       router.push("/signin");
     }
@@ -99,9 +99,9 @@ const user = JSON.parse(localStorage.getItem("user") || "null");
                 height={16}
               />
 
-              <p className={`text-xs font-normal ${textColor} dark:text-white`}>
+              {/* <p className={`text-xs font-normal ${textColor} dark:text-white`}>
                 {"more"}
-              </p>
+              </p> */}
             </div>
             
           </div>

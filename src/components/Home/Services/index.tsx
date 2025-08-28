@@ -1,22 +1,28 @@
+"use client";
+
 import Image from "next/image";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Link from "next/link";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useAppContext } from "@/context/AppContext";
 
 const Categories = () => {
-
-      // const router = useRouter();
+  const router = useRouter();
+     const { search, setSearch, filter, setFilter } = useAppContext();
   
 
-//     const handleNavigate = () => {
-// const user = JSON.parse(localStorage.getItem("user") || "null");
-//     if (user && user?._id) {
-//       router.push(`/properties/${_id}`);
-//     } else {
-//       router.push("/signin");
-//     }
-//   };
+  const handleNavigate = (place: string) => {
+    const user = JSON.parse(localStorage.getItem("user") || "null");
+    if (user && user?._id) {
+      // const query = new URLSearchParams();
+      // if (place) query.append("place", place);
+      setFilter(place);
 
+      router.push(`/properties`);
+    } else {
+      router.push("/signin");
+    }
+  };
 
   return (
     <section className="relative overflow-hidden">
@@ -44,7 +50,6 @@ const Categories = () => {
         <div className="grid grid-cols-12 items-center gap-6 md:gap-10">
           {/* Text Block */}
           <div className="lg:col-span-6 col-span-12">
-        
             <h2 className="text-2xl md:text-4xl lg:text-52 mt-4 mb-2 font-medium leading-snug text-dark dark:text-white">
               India’s fastest-growing platform for verified hostels & PGs built
               for students and young professionals.
@@ -65,7 +70,7 @@ const Categories = () => {
           {/* Image Blocks */}
           <div className="lg:col-span-6 col-span-12">
             <div className="relative rounded-2xl overflow-hidden group">
-              <Link href="/residential-homes">
+              <div onClick={() => handleNavigate("kochi")}>
                 <Image
                   src="/images/categories/villas.jpg"
                   alt="villas"
@@ -74,9 +79,9 @@ const Categories = () => {
                   className="w-full"
                   unoptimized={true}
                 />
-              </Link>
-              <Link
-                href="/residential-homes"
+              </div>
+              <div
+                onClick={() => handleNavigate("kochi")}
                 className="absolute w-full h-full bg-gradient-to-b from-black/0 to-black/80 top-full flex flex-col justify-between pl-6 pb-6 group-hover:top-0 duration-500"
               >
                 <div className="flex justify-end mt-4 mr-4">
@@ -87,16 +92,17 @@ const Categories = () => {
                 <div className="flex flex-col gap-1.5">
                   <h3 className="text-white text-lg md:text-2xl">Kochi</h3>
                   <p className="text-white/80 text-xs md:text-base leading-snug">
-                    Coastal city known for its culture, modern living, and vibrant lifestyle.
+                    Coastal city known for its culture, modern living, and
+                    vibrant lifestyle.
                   </p>
                 </div>
-              </Link>
+              </div>
             </div>
           </div>
 
           <div className="lg:col-span-6 col-span-12">
             <div className="relative rounded-2xl overflow-hidden group">
-              <Link href="/luxury-villa">
+              <div onClick={() => handleNavigate("bangalore")}>
                 <Image
                   src="/images/categories/luxury-villa.jpg"
                   alt="villas"
@@ -105,9 +111,9 @@ const Categories = () => {
                   className="w-full"
                   unoptimized={true}
                 />
-              </Link>
-              <Link
-                href="/luxury-villa"
+              </div>
+              <div
+                onClick={() => handleNavigate("bangalore")}
                 className="absolute w-full h-full bg-gradient-to-b from-black/0 to-black/80 top-full flex flex-col justify-between pl-6 pb-6 group-hover:top-0 duration-500"
               >
                 <div className="flex justify-end mt-4 mr-4">
@@ -118,16 +124,17 @@ const Categories = () => {
                 <div className="flex flex-col gap-1.5">
                   <h3 className="text-white text-lg md:text-2xl">Bangalore</h3>
                   <p className="text-white/80 text-xs md:text-base leading-snug">
-                    India’s tech hub, famous for startups, nightlife, and a cosmopolitan vibe.
+                    India’s tech hub, famous for startups, nightlife, and a
+                    cosmopolitan vibe.
                   </p>
                 </div>
-              </Link>
+              </div>
             </div>
           </div>
 
           <div className="lg:col-span-3 col-span-6">
             <div className="relative rounded-2xl overflow-hidden group">
-              <Link href="/appartment">
+              <div onClick={() => handleNavigate("chennai")}>
                 <Image
                   src="/images/categories/appartment.jpg"
                   alt="villas"
@@ -136,9 +143,9 @@ const Categories = () => {
                   className="w-full"
                   unoptimized={true}
                 />
-              </Link>
-              <Link
-                href="/appartment"
+              </div>
+              <div
+                onClick={() => handleNavigate("chennai")}
                 className="absolute w-full h-full bg-gradient-to-b from-black/0 to-black/80 top-full flex flex-col justify-between pl-6 pb-6 group-hover:top-0 duration-500"
               >
                 <div className="flex justify-end mt-4 mr-4">
@@ -149,16 +156,17 @@ const Categories = () => {
                 <div className="flex flex-col gap-1.5">
                   <h3 className="text-white text-lg md:text-xl">Chennai</h3>
                   <p className="text-white/80 text-xs md:text-base leading-snug">
-                    A perfect blend of heritage, beaches, and growing urban life.
+                    A perfect blend of heritage, beaches, and growing urban
+                    life.
                   </p>
                 </div>
-              </Link>
+              </div>
             </div>
           </div>
 
           <div className="lg:col-span-3 col-span-6">
             <div className="relative rounded-2xl overflow-hidden group">
-              <Link href="/office-spaces">
+              <div onClick={() => handleNavigate("hyderabad")}>
                 <Image
                   src="/images/categories/office.jpg"
                   alt="office"
@@ -167,9 +175,9 @@ const Categories = () => {
                   className="w-full"
                   unoptimized={true}
                 />
-              </Link>
-              <Link
-                href="/office-spaces"
+              </div>
+              <div
+                onClick={() => handleNavigate("hyderabad")}
                 className="absolute w-full h-full bg-gradient-to-b from-black/0 to-black/80 top-full flex flex-col justify-between pl-6 pb-6 group-hover:top-0 duration-500"
               >
                 <div className="flex justify-end mt-4 mr-4">
@@ -180,10 +188,11 @@ const Categories = () => {
                 <div className="flex flex-col gap-1.5">
                   <h3 className="text-white text-lg md:text-xl">Hyderabad</h3>
                   <p className="text-white/80 text-xs md:text-base leading-snug">
-                    Modern IT city with rich history, food culture, and affordable housing.
+                    Modern IT city with rich history, food culture, and
+                    affordable housing.
                   </p>
                 </div>
-              </Link>
+              </div>
             </div>
           </div>
         </div>

@@ -1,19 +1,27 @@
+"use client";
+
 import HeroSub from "@/components/shared/HeroSub";
 import PropertiesListing from "@/components/Properties/PropertyList";
-import React from "react";
-import { Metadata } from "next";
-export const metadata: Metadata = {
-    title: "Property List | Hostay",
-};
+import React, { useState } from "react";
+import { useAppContext } from "@/context/AppContext";
+
 
 const page = () => {
+
+
+ const { search, setSearch, filter, setFilter } = useAppContext();
+    
+
     return (
         <>
             <HeroSub
                 title="Book Direct"
                 description="Contact trusted owners directly without middlemen"
+                setFilter={setFilter}
+                setSearch={setSearch}
+                 search={search}
             />
-            <PropertiesListing />
+            <PropertiesListing filter= {filter} search={search} />
         </>
     );
 };
