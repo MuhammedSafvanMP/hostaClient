@@ -31,6 +31,12 @@ export const postAHostelReviews  = async (data) => {
   return response; 
 };
 
+export const postAHostelRating  = async (id, data) => {
+  const response = await axios.put(`${API}/hostels/ratings/${id}`, {data});
+  return response; 
+};
+
+
 export const fetchAHostelBookings  = async (id) => {
   const response = await axios.get(`${API}/bookings/user/${id}`);
   return response.data; 
@@ -73,3 +79,4 @@ export const updateAUser = async (id, formData) => {
   });
   return response;
 };
+

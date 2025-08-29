@@ -5,24 +5,43 @@ import { Icon } from "@iconify/react";
 import Image from "next/image";
 import BookingForm from "@/components/bookingForm";
 import {
+  fetchAHostel,
   fetchAHostelReviews,
   fetchAHostelRoom,
+  postAHostelRating,
   postAHostelReviews,
 } from "@/api/Api";
 import * as Icons from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { formatDistanceToNowStrict, parseISO } from "date-fns";
+import { Breakdown, RatingBreakdown } from "../StarRating";
 
 export default function Details() {
   const { slug } = useParams();
 
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState<any>(null);
+  const [ratingData, setRatingData] = useState<any>(null);
   const [reviews, setReviews] = useState<any>([]);
   const [newReview, setNewReview] = useState("");
   const [newRating, setNewRating] = useState(0);
+  const [userId, setUserId] = useState<any>(null);
+  const [breakdown, setBreakdown] = React.useState<Breakdown>({
+    5: 0,
+    4: 0,
+    3: 3,
+    2: 0,
+    1: 1,
+  });
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        setUserId(JSON.parse(storedUser));
+      }
+    }
+
     const loadData = async () => {
       try {
         const res = await fetchAHostelRoom(slug);
@@ -49,22 +68,42 @@ export default function Details() {
 
   const item = data[0];
 
-
   // Component handler
   const handleAddReview = async () => {
     if (newReview.trim() === "") return;
 
     const newItem = {
       roomId: slug,
-      userId: "682aff06f8f939751cf0050c",
+      userId: userId._id,
       chat: newReview,
     };
 
+    handleAddRating();
     try {
       const response = await postAHostelReviews(newItem);
 
       if (response.status === 201) {
         setNewReview("");
+        await fetchAHostelReviews(slug);
+      }
+    } catch (error) {
+      console.error("Error posting review:", error);
+    }
+  };
+
+  const handleAddRating = async () => {
+    if (newRating === 0) return;
+
+    const starRating = {
+      ratingValue: newRating,
+      userId: userId._id,
+    };
+
+    try {
+      const response = await postAHostelRating(item?.hostelId?._id, starRating);
+
+      if (response.status === 200) {
+        setNewRating(0);
         await fetchAHostelReviews(slug);
       }
     } catch (error) {
@@ -316,7 +355,10 @@ export default function Details() {
                 />
               </div>
             </div>
-            <div className="mt-6 max-h-96 overflow-y-auto scrollbar-hide flex flex-col gap-4">
+
+            <RatingBreakdown breakdown={breakdown} />
+
+            <div className=" max-h-96 overflow-y-auto scrollbar-hide flex flex-col gap-4">
               <div className="mt-4 p-4 border border-dark/10 dark:border-white/20 rounded-xl bg-white dark:bg-dark/20">
                 <textarea
                   value={newReview}
@@ -389,7 +431,8 @@ export default function Details() {
       <BookingForm
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-         roomId = {slug} hostelId = {item?.hostelId?._id} 
+        roomId={slug}
+        hostelId={item?.hostelId?._id}
       />
     </section>
   );

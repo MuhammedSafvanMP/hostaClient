@@ -50,12 +50,17 @@ const Profile = () => {
 
   const handleSubmit = async (values: any, { setSubmitting }: any) => {
     try {
+
+      console.log(values.image, "image");
+      
       const formData = new FormData();
       formData.append("name", values.name);
       formData.append("email", values.email);
       formData.append("phone", values.phone);
       if (values.image) formData.append("image", values.image);
 
+      console.log(formData, "form");
+      
       const res = await updateAUser(userId?._id, formData);
       setUser(res.data.user); // updated user
       setEditMode(false);
