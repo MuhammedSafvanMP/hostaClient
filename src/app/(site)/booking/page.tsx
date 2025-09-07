@@ -12,12 +12,18 @@ const statusColors: Record<string, string> = {
 
 export default function Bookings() {
   const [data, setData] = useState([]);
+  const [userId, setUserId] = useState<any>(null);
 
-  useEffect(() => {
+useEffect(() => {
+  const storedUser = localStorage.getItem("user");
+  if (storedUser) {
+    const parsedUser = JSON.parse(storedUser);
+    setUserId(parsedUser);
+
+    // ✅ only fetch if parsedUser exists
     const loadData = async () => {
       try {
-        const userId = "682aff06f8f939751cf0050c";
-        const res = await fetchAHostelBookings(userId);
+        const res = await fetchAHostelBookings(parsedUser._id);
         setData(res);
       } catch (err) {
         console.error("Failed to fetch hostels bookings:", err);
@@ -25,7 +31,9 @@ export default function Bookings() {
     };
 
     loadData();
-  }, []);
+  }
+}, []);
+
 
   return (
     <section className="pt-20 pb-10 px-4 max-w-4xl mx-auto">

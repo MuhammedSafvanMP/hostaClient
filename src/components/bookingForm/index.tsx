@@ -1,12 +1,34 @@
 "use client";
 
 import { postAHostelBooking } from "@/api/Api";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-export default function BookingForm({ isOpen, onClose, roomId, hostelId }) {
+export default function BookingForm({ isOpen, onClose,  hostelId, data }) {
   const [formData, setFormData] = useState({
     checkInDate: "",
   });
+
+    const [search, setSearch] = useState("");
+      const [roomId, setRoomId] = useState("");
+        const [userId, setUserId] = useState<any>(null);
+
+
+
+
+  const filteredOwners = data.filter((o: any) =>
+    o?.roomNumber.toLowerCase().includes(search.toLowerCase())
+  );
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        setUserId(JSON.parse(storedUser));
+      }
+    }
+  }, []);
+
+
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -19,7 +41,7 @@ export default function BookingForm({ isOpen, onClose, roomId, hostelId }) {
   const handleBooking = async () => {
     try {
       const booking = {
-        userId: "682aff06f8f939751cf0050c", 
+        userId: userId._id, 
         roomId,
         hostelId,
         checkInDate: formData.checkInDate,
@@ -51,6 +73,36 @@ export default function BookingForm({ isOpen, onClose, roomId, hostelId }) {
             onChange={handleChange}
             className="border p-2 rounded w-full"
           />
+          
+
+          <div className="space-y-2">
+            <label htmlFor="owner">Rooms</label>
+
+            {/* Search box */}
+            <input
+              type="text"
+              placeholder="Search rooms..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full border border-gray-300 rounded px-3 py-2 mb-1"
+            />
+
+            {/* Owner select */}
+            <select
+              id="owner"
+              value={roomId}
+              onChange={(e) => setRoomId(e.target.value)}
+              className="w-full border border-gray-300 rounded px-3 py-2"
+            >
+              <option value="">Select Room</option>
+              {filteredOwners.map((o: any) => (
+                <option key={o._id} value={o._id}>
+                  {o.roomNumber}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <div className="flex gap-4 mt-4">
             <button
               onClick={handleBooking}

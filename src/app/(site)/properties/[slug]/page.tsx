@@ -45,6 +45,7 @@ export default function Details() {
     const loadData = async () => {
       try {
         const res = await fetchAHostelRoom(slug);
+        
         setData(res);
       } catch (err) {
         console.error("Failed to fetch A hostels:", err);
@@ -221,7 +222,8 @@ export default function Details() {
 
         <div className="grid grid-cols-12 gap-8 mt-10">
           <div className="lg:col-span-8 col-span-12">
-            <h3 className="text-xl font-medium">Property details</h3>
+            <h3 className="text-xl font-medium">Facilities</h3>
+            <p className="text-sm">Provided common by this hostel</p>
             <div className="py-8 my-8 border-y border-dark/10 dark:border-white/20 flex flex-col gap-8">
               {item?.hostelId?.amenities?.map((amenity: any) => {
                 const LucideIcon: any =
@@ -431,8 +433,8 @@ export default function Details() {
       <BookingForm
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        roomId={slug}
         hostelId={item?.hostelId?._id}
+        data = {data}
       />
     </section>
   );
