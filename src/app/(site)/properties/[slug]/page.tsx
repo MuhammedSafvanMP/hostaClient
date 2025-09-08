@@ -45,7 +45,7 @@ export default function Details() {
     const loadData = async () => {
       try {
         const res = await fetchAHostelRoom(slug);
-        
+
         setData(res);
       } catch (err) {
         console.error("Failed to fetch A hostels:", err);
@@ -66,6 +66,8 @@ export default function Details() {
   }, []);
 
   if (!data) return <p>Loading...</p>;
+
+  console.log(data, "hii");
 
   const item = data[0];
 
@@ -220,16 +222,36 @@ export default function Details() {
           </div>
         </div>
 
+        <div className="w-full max-w-sm mt-14 rounded-2xl shadow-md p-6 bg-white dark:bg-gray-800">
+          {/* Rent Amount */}
+          <div className="text-center mb-4">
+            <p className="text-gray-500 dark:text-gray-400 text-sm">
+              Monthly Rent
+            </p>
+            <h2 className="text-3xl font-bold text-blue-600">
+              ₹{item?.hostelId?.price}
+            </h2>
+          </div>
+
+          {/* Additional Fees */}
+          <div className="border-t pt-4 space-y-2">
+            <div className="flex justify-between text-sm text-gray-700 dark:text-gray-200">
+              <span>{"Additional fee"}</span>
+              <span>₹{item?.hostelId?.additionalFee}</span>
+            </div>
+          </div>
+        </div>
+
         <div className="grid grid-cols-12 gap-8 mt-10">
           <div className="lg:col-span-8 col-span-12">
             <h3 className="text-xl font-medium">Facilities</h3>
             <p className="text-sm">Provided common by this hostel</p>
-            <div className="py-8 my-8 border-y border-dark/10 dark:border-white/20 flex flex-col gap-8">
+            <div className="py-8 my-8 border-y border-dark/10 dark:border-white/20 grid grid-cols-2 gap-3">
               {item?.hostelId?.amenities?.map((amenity: any) => {
                 const LucideIcon: any =
                   Icons[amenity.icon as keyof typeof Icons];
                 return (
-                  <div key={amenity._id} className="flex items-center gap-6">
+                  <div key={amenity._id} className="flex items-center gap-3">
                     {LucideIcon && <LucideIcon width={16} height={16} />}
                     <p className="text-sm mobile:text-base font-normal text-black dark:text-white">
                       {amenity.name}
@@ -323,6 +345,55 @@ export default function Details() {
                 </div>
               </TabsContent>
             </Tabs>
+
+            <h3 className="text-xl font-medium">Accommodation</h3>
+            <p className="text-sm ">Prices are per bed or room</p>
+            <div className="my-8 grid grid-cols-2 md:grid-cols-4 gap-6">
+              {data?.map((room: any) => (
+                <div
+                  key={room._id}
+                  className="rounded-xl shadow-md border border-gray-200 dark:border-gray-700 overflow-hidden bg-white dark:bg-dark"
+                >
+                  {/* Top Image */}
+                  <img
+                    src={room?.photos[0]}
+                    alt={room.name}
+                    className="w-full h-28 object-cover"
+                  />
+
+                  {/* Facilities */}
+                  <div className="p-3 space-y-2">
+                    {room?.amenities?.map((facility: any) => {
+                      const LucideIcon: any =
+                        Icons[facility.icon as keyof typeof Icons];
+                      return (
+                        <div
+                          key={facility._id}
+                          className="flex items-center gap-1 text-xs text-gray-600 dark:text-gray-300"
+                        >
+                          {LucideIcon && <LucideIcon size={12} />}{" "}
+                          {/* smaller icon */}
+                          <span className="text-xs">{facility.name}</span>{" "}
+                          {/* smaller text */}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Prices */}
+                  <div className="p-3 border-t border-gray-200 dark:border-gray-700">
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      With Food:{" "}
+                      <span className="font-semibold">₹{room.withFood}</span>
+                    </p>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      Without Food:{" "}
+                      <span className="font-semibold">₹{room.withoutFood}</span>
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
 
             <iframe
               src={item?.hostelId?.googleMap}
@@ -426,6 +497,33 @@ export default function Details() {
                 </div>
               ))}
             </div>
+
+            <div className="w-full mt-14 rounded-2xl shadow-md p-6 bg-white dark:bg-gray-800">
+           
+              {/* Additional Fees */}
+              <div className=" pt-4 space-y-2">
+                <div className="flex justify-between text-sm text-gray-700 dark:text-gray-200">
+                  <span>{"Gate Open Time"}</span>
+                  <span>{item?.hostelId?.gateOpenTime} AM </span>
+                </div>
+                <div className="flex justify-between text-sm text-gray-700 dark:text-gray-200">
+                  <span>{"Gate Close Time"}</span>
+                  <span>{item?.hostelId?.gateCloseTime} PM </span>
+                </div>
+                <div className="flex justify-between text-sm text-gray-700 dark:text-gray-200">
+                  <span>{"Visitors allowed"}</span>
+                  <span>{item?.hostelId?.visitorsAllow ? "Yes" : "No"}</span>
+                </div>
+                <span>{"Restrictions"}</span>
+                <div className="flex flex-col justify-between text-sm text-gray-700 dark:text-gray-200">
+                  {item?.hostelId?.restrictions?.map(
+                    (restr: any, index: any) => {
+                      return <span key={index}>{restr}</span>;
+                    }
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -434,7 +532,7 @@ export default function Details() {
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         hostelId={item?.hostelId?._id}
-        data = {data}
+        data={data}
       />
     </section>
   );
