@@ -67,7 +67,6 @@ export default function Details() {
 
   if (!data) return <p>Loading...</p>;
 
-  console.log(data, "hii");
 
   const item = data[0];
 
@@ -498,8 +497,10 @@ export default function Details() {
               ))}
             </div>
 
+
             <div className="w-full mt-14 rounded-2xl shadow-md p-6 bg-white dark:bg-gray-800">
-           
+               <h3 className="text-xl font-medium">Policies/Rules</h3>
+              <p className="text-sm ">Mandatory hostel rules to be followed</p>
               {/* Additional Fees */}
               <div className=" pt-4 space-y-2">
                 <div className="flex justify-between text-sm text-gray-700 dark:text-gray-200">
@@ -513,6 +514,10 @@ export default function Details() {
                 <div className="flex justify-between text-sm text-gray-700 dark:text-gray-200">
                   <span>{"Visitors allowed"}</span>
                   <span>{item?.hostelId?.visitorsAllow ? "Yes" : "No"}</span>
+                </div>
+                    <div className="flex justify-between text-sm text-gray-700 dark:text-gray-200">
+                  <span>{"Fulltime warden"}</span>
+                  <span>{item?.hostelId?.fulltimeWarden ? "Yes" : "No"}</span>
                 </div>
                 <span>{"Restrictions"}</span>
                 <div className="flex flex-col justify-between text-sm text-gray-700 dark:text-gray-200">

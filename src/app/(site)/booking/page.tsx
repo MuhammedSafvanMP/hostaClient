@@ -23,7 +23,7 @@ useEffect(() => {
     // ✅ only fetch if parsedUser exists
     const loadData = async () => {
       try {
-        const res = await fetchAHostelBookings(parsedUser._id);
+        const res = await fetchAHostelBookings(parsedUser._id);        
         setData(res);
       } catch (err) {
         console.error("Failed to fetch hostels bookings:", err);
