@@ -67,7 +67,6 @@ export default function Details() {
 
   if (!data) return <p>Loading...</p>;
 
-
   const item = data[0];
 
   // Component handler
@@ -224,9 +223,8 @@ export default function Details() {
         <div className="w-full max-w-sm mt-14 rounded-2xl shadow-md p-6 bg-white dark:bg-gray-800">
           {/* Rent Amount */}
           <div className="text-center mb-4">
-            <p className="text-gray-500 dark:text-gray-400 text-sm">
-              Monthly Rent
-            </p>
+            <h3 className="text-xl font-medium"> Monthly Rent</h3>
+
             <h2 className="text-3xl font-bold text-blue-600">
               ₹{item?.hostelId?.price}
             </h2>
@@ -234,9 +232,19 @@ export default function Details() {
 
           {/* Additional Fees */}
           <div className="border-t pt-4 space-y-2">
+            <h3 className="text-xl font-medium">Security Deposits</h3>
+
             <div className="flex justify-between text-sm text-gray-700 dark:text-gray-200">
-              <span>{"Additional fee"}</span>
+              <span>{"Caution Deposit"}</span>
               <span>₹{item?.hostelId?.additionalFee}</span>
+            </div>
+            <div className="flex justify-between text-sm text-gray-700 dark:text-gray-200">
+              <span>{"Registration fee"}</span>
+              <span>₹{item?.hostelId?.registrationFee}</span>
+            </div>
+            <div className="flex justify-between text-sm text-gray-700 dark:text-gray-200">
+              <span>Refund</span>
+              <span>{item?.hostelId?.refund ? "Yes" : "No"}</span>
             </div>
           </div>
         </div>
@@ -362,6 +370,7 @@ export default function Details() {
 
                   {/* Facilities */}
                   <div className="p-3 space-y-2">
+                    <h3 className="text-xl font-medium">{room?.roomNumber}</h3>
                     {room?.amenities?.map((facility: any) => {
                       const LucideIcon: any =
                         Icons[facility.icon as keyof typeof Icons];
@@ -497,9 +506,8 @@ export default function Details() {
               ))}
             </div>
 
-
             <div className="w-full mt-14 rounded-2xl shadow-md p-6 bg-white dark:bg-gray-800">
-               <h3 className="text-xl font-medium">Policies/Rules</h3>
+              <h3 className="text-xl font-medium">Policies/Rules</h3>
               <p className="text-sm ">Mandatory hostel rules to be followed</p>
               {/* Additional Fees */}
               <div className=" pt-4 space-y-2">
@@ -515,7 +523,7 @@ export default function Details() {
                   <span>{"Visitors allowed"}</span>
                   <span>{item?.hostelId?.visitorsAllow ? "Yes" : "No"}</span>
                 </div>
-                    <div className="flex justify-between text-sm text-gray-700 dark:text-gray-200">
+                <div className="flex justify-between text-sm text-gray-700 dark:text-gray-200">
                   <span>{"Fulltime warden"}</span>
                   <span>{item?.hostelId?.fulltimeWarden ? "Yes" : "No"}</span>
                 </div>
