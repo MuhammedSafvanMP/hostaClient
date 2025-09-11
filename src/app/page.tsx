@@ -15,7 +15,7 @@ export default function Home() {
       <Properties />
       {/* <FeaturedProperty /> */}
       <Testimonial />
-      <BlogSmall />
+      {/* <BlogSmall /> */}
       <GetInTouch />
       <FAQ />
       <Promotion />

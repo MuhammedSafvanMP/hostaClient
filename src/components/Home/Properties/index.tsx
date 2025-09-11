@@ -18,9 +18,7 @@ const [data, setData] = useState<any>(null);
   useEffect(() => {
     const loadData = async () => {
       try {
-        const res = await fetchHostelActive();
-        console.log(res, "res");
-        
+        const res = await fetchHostelActive();        
         setData(res);
       } catch (err) {
         console.error("Failed to fetch hostels:", err);
